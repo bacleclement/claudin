@@ -1,5 +1,7 @@
 # Claudin
 
+> **[Version francaise](README.fr.md)**
+
 **Free, open-source LinkedIn outreach. Replace Waalaxy with Claude.**
 
 Claudin is a set of [Claude Code](https://claude.ai/code) skills that automate your LinkedIn outreach:

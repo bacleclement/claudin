@@ -1,5 +1,7 @@
 # Claudin
 
+> **[English version](README.md)**
+
 **Prospection LinkedIn gratuite et open-source. Remplace Waalaxy par Claude.**
 
 Claudin est un ensemble de skills [Claude Code](https://claude.ai/code) qui automatisent ta prospection LinkedIn :
