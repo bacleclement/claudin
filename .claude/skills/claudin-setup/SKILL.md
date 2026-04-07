@@ -48,14 +48,14 @@ Store as config.linkedin_plan.
 FR: "Decris ton activite en une phrase. Que vends-tu ou que proposes-tu ?"
 EN: "Describe your business in one sentence. What do you sell or offer?"
 
-Free text. Store as config.business.description.
+Free text — do NOT use AskUserQuestion. Ask the question as plain text output and wait for the user to reply in the chat. Store as config.business.description.
 
 ### Step 3 — Target Definition (first campaign)
 
 FR: "Qui veux-tu atteindre ? Decris ton client ideal (role, secteur, taille d'entreprise...)"
 EN: "Who do you want to reach? Describe your ideal customer (role, industry, company size...)"
 
-Free text. Claude analyzes the answer.
+Free text — do NOT use AskUserQuestion. Ask the question as plain text output and wait for the user to reply in the chat. Claude analyzes the answer.
 
 ### Step 4 — Search Keywords (AI-assisted)
 
@@ -79,12 +79,12 @@ User selects which ones to keep. Claude may also ask:
 FR: "Des entreprises specifiques a cibler ?"
 EN: "Any specific companies to target?"
 
-Free text (optional). E.g. "Decathlon, Leroy Merlin, Castorama"
+Free text (optional) — do NOT use AskUserQuestion. Ask as plain text and wait for reply. E.g. "Decathlon, Leroy Merlin, Castorama"
 
 FR: "Zone geographique ?"
 EN: "Geographic area?"
 
-Free text. E.g. "Lille, Hauts-de-France" or "Europe"
+Free text — do NOT use AskUserQuestion. Ask as plain text and wait for reply. E.g. "Lille, Hauts-de-France" or "Europe"
 
 Store as first campaign in config.campaigns[].
 
