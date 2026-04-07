@@ -1,0 +1,26 @@
+{
+  "language": "fr",
+  "linkedin_plan": "free",
+  "schedule": "morning",
+  "business": {
+    "description": "Describe your product or service in one sentence"
+  },
+  "campaigns": [
+    {
+      "name": "Campaign 1",
+      "target_roles": ["acheteur", "sourcing manager"],
+      "target_industries": ["retail", "distribution"],
+      "target_locations": ["France"],
+      "search_keywords": ["acheteur sourcing", "responsable achats"],
+      "connection_note_fr": "Bonjour {prenom}, ...",
+      "connection_note_en": "Hi {firstName}, ...",
+      "followup_message_fr": "Merci pour la connexion {prenom} ! ...",
+      "followup_message_en": "Thanks for connecting {firstName}! ..."
+    }
+  ],
+  "limits": {
+    "connections_per_run": 15,
+    "connections_per_week": 100,
+    "messages_per_day": 50
+  }
+}
