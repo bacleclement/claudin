@@ -9,7 +9,7 @@ Automated LinkedIn outreach: search for relevant profiles, send connection reque
 
 ## Prerequisites
 
-- Claude Code desktop app with Claude in Chrome extension
+- Claude Code app (desktop or web — NOT terminal CLI) with Claude in Chrome extension
 - Chrome open with LinkedIn logged in
 - config.json exists (run /claudin-setup first)
 

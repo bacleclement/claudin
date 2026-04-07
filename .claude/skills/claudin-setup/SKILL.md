@@ -10,7 +10,7 @@ Interactive wizard that configures Claudin for the user's outreach needs. Genera
 ## Prerequisites Check
 
 Before starting, verify:
-1. User is running Claude Code desktop app (not CLI)
+1. User is running Claude Code app — desktop or web (claude.ai/code), NOT the terminal CLI
 2. Claude in Chrome extension is installed and connected
 3. User is logged into LinkedIn in Chrome
 

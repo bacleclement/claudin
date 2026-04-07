@@ -24,25 +24,20 @@ Claudin utilise Claude in Chrome pour controler ton onglet LinkedIn — comme tu
 
 ## Prerequis
 
-1. **Claude Code desktop app** — [telecharger ici](https://claude.ai/code)
-2. **Extension Claude in Chrome** — installer depuis le Chrome Web Store
+1. **Claude Code app** (desktop ou web sur [claude.ai/code](https://claude.ai/code)) — **pas** le terminal CLI
+2. **Extension Claude in Chrome** — installer depuis le Chrome Web Store, connecter a ta session Claude Code
 3. **Compte LinkedIn** (gratuit ou Premium — Claudin s'adapte)
+
+> **Important :** Claudin necessite l'**app** Claude Code (desktop ou web), pas le terminal CLI. Le controle du navigateur ne fonctionne que via l'app.
 
 ## Demarrage rapide
 
-```bash
-# 1. Clone le repo
-git clone https://github.com/bacleclement/claudin.git
-cd claudin
-
-# 2. Ouvre dans Claude Code
-claude
-
-# 3. Lance l'assistant de configuration
-/claudin-setup
-
-# 4. Lance la prospection
-/claudin
+```
+1. Clone le repo :         git clone https://github.com/bacleclement/claudin.git
+2. Ouvre l'app Claude Code (desktop ou claude.ai/code)
+3. Ouvre le dossier claudin comme projet
+4. Lance :                 /claudin-setup
+5. Demarre la prospection : /claudin
 ```
 
 L'assistant te pose 7 questions (en francais ou anglais), redige tes messages avec l'IA, et configure tout. 5 minutes.

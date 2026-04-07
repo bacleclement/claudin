@@ -13,7 +13,7 @@ Replace Waalaxy, Lemlist, and Phantombuster with AI.
 
 ## Prerequisites
 
-- Claude Code desktop app (not CLI)
+- Claude Code app — desktop or web at claude.ai/code (NOT terminal CLI)
 - Claude in Chrome extension installed and connected
 - Chrome open with LinkedIn logged in
 

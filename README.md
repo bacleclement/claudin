@@ -24,25 +24,20 @@ Claudin uses Claude in Chrome to control your LinkedIn browser tab — the same 
 
 ## Prerequisites
 
-1. **Claude Code desktop app** — [download here](https://claude.ai/code)
-2. **Claude in Chrome extension** — install from Chrome Web Store
+1. **Claude Code app** (desktop or web at [claude.ai/code](https://claude.ai/code)) — **not** the CLI terminal
+2. **Claude in Chrome extension** — install from Chrome Web Store, connect it to your Claude Code session
 3. **LinkedIn account** (free or Premium — Claudin adapts to your plan)
+
+> **Important:** Claudin requires the Claude Code **app** (desktop or web), not the terminal CLI. Browser control only works through the app.
 
 ## Quick Start
 
-```bash
-# 1. Clone the repo
-git clone https://github.com/bacleclement/claudin.git
-cd claudin
-
-# 2. Open in Claude Code
-claude
-
-# 3. Run the setup wizard
-/claudin-setup
-
-# 4. Start outreaching
-/claudin
+```
+1. Clone the repo:       git clone https://github.com/bacleclement/claudin.git
+2. Open Claude Code app (desktop or claude.ai/code)
+3. Open the claudin folder as your project
+4. Run:                  /claudin-setup
+5. Start outreaching:    /claudin
 ```
 
 The setup wizard asks you 7 questions (in French or English), drafts your messages using AI, and configures everything. Takes 5 minutes.
@@ -117,8 +112,11 @@ No. Claudin works with free accounts. With Premium you get unlimited personalize
 **Does it work in languages other than English/French?**
 The setup wizard is in French or English, but your messages and search keywords can be in any language.
 
+**Can I run it from the terminal (CLI)?**
+No. Claudin requires the Claude Code **app** (desktop or web). Browser control is not available in the terminal CLI.
+
 **Can I run it headless / in the cloud?**
-Not currently. Claudin needs a Chrome browser with the Claude in Chrome extension. Your computer needs to be on with Chrome open when Claudin runs.
+Not currently. Claudin needs Chrome open with the extension connected. Your computer needs to be on when Claudin runs.
 
 ## License
 
