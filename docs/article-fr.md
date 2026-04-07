@@ -1,191 +1,151 @@
-# J'ai remplace mon Waalaxy a 99$/mois par Claude — voici l'alternative gratuite et open-source
+# J'ai remplace Waalaxy par Claude — 0 euro au lieu de 99 euros/mois
 
-*Comment j'ai cree un outil de prospection LinkedIn en un apres-midi qui fait tout ce que fait Waalaxy — gratuitement.*
+Waalaxy, Lemlist, Phantombuster. Entre 39 et 139 euros par mois pour automatiser trois actions sur LinkedIn : chercher des profils, envoyer des demandes de connexion, et envoyer un message quand ils acceptent.
 
----
+Trois etapes. 1 200 euros par an.
 
-## Le probleme
-
-Si vous avez deja fait de la prospection LinkedIn a grande echelle, vous connaissez les outils : Waalaxy, Lemlist, Phantombuster. Ils facturent tous entre 39 et 139 euros/mois pour essentiellement :
-
-1. Chercher des profils
-2. Envoyer des demandes de connexion
-3. Envoyer un message quand ils acceptent
-
-Trois etapes. Et vous payez 1 200 euros/an pour ca.
-
-![Waalaxy pricing — 39 a 139 euros/mois](images/waalaxy-pricing.jpg)
-
-Je me suis dit : Claude peut controler un navigateur. Claude peut lire des profils LinkedIn. Claude peut ecrire des messages personnalises. Pourquoi je paye pour ca ?
-
-J'ai donc cree **Claudin** — un ensemble de skills Claude Code, gratuit et open-source, qui remplace Waalaxy.
+Claude peut controler un navigateur. Claude peut lire des profils LinkedIn. Claude peut ecrire des messages personnalises. Alors j'ai cree **Claudin** — un outil open-source qui fait la meme chose, gratuitement.
 
 ---
 
-## Ce que fait Claudin
+## Mes resultats au bout d'un jour
 
-Claudin tourne dans l'app Claude Code (desktop ou web) et controle votre navigateur Chrome via l'extension Claude in Chrome. Il fait exactement trois choses :
+```
+Claudin — Jour 1
 
-1. **Recherche** — trouve des profils pertinents sur LinkedIn selon votre cible
-2. **Connexion** — envoie des demandes avec des notes personnalisees redigees par l'IA
-3. **Message** — detecte quand quelqu'un accepte et envoie automatiquement un message de suivi
+Profils trouves :  15
+Invitations :      15 (15/100 cette semaine)
+Acceptations :     2
+Messages envoyes : 2
+```
 
-Pas de sequences (c'est pour la v2). Pas de recherche d'emails (a venir). Juste la boucle principale qui genere 80% des resultats.
+Deux acheteurs d'une grande enseigne de bricolage ont accepte ma demande et recu un message de suivi automatique en quelques heures. L'un est directeur.
+
+Cout total : 0 euro.
+
+Ce que Waalaxy facture 99 euros/mois pour le meme resultat.
+
+Et le pipeline continue de tourner :
+
+```
+=== CLAUDIN DASHBOARD ===
+
+Pipeline :
+  Trouves :   ||||||||||||||| 15
+  Invites :   ||||||||||||| 13
+  Connectes : || 2
+  Messages :  || 2
+
+Taux d'acceptation : 13% (2/15)
+Invitations cette semaine : 15/100
+```
 
 ---
 
-## Installation : 5 minutes
+## Comment ca marche
 
-### Pre-requis
-- App Claude Code (desktop ou [claude.ai/code](https://claude.ai/code)) — PAS le terminal CLI
-- Extension Claude in Chrome (Chrome Web Store)
-- Compte LinkedIn (gratuit ou Premium)
+Claudin est un ensemble de skills pour Claude Code — des fichiers Markdown qui guident Claude dans l'execution de taches. Il utilise l'extension Claude in Chrome pour controler votre navigateur LinkedIn, exactement comme vous le feriez manuellement, mais en automatique.
 
-### Installation
+Le flow est simple :
+
+### 1. Configuration (5 minutes, une seule fois)
+
+Lancez `/claudin-setup`. L'assistant vous pose quelques questions :
+
+- **Langue** — francais ou anglais ? Tout s'adapte.
+- **Plan LinkedIn** — gratuit ou Premium ? Claudin ajuste sa strategie (les notes personnalisees sont limitees en gratuit).
+- **Votre activite** — decrivez ce que vous faites en une phrase.
+- **Votre cible** — decrivez votre client ideal.
+- **Mots-cles** — Claude analyse vos reponses et propose 6-8 recherches LinkedIn. Vous cochez celles qui vous semblent pertinentes.
+- **Messages** — Claude redige une note de connexion et un message de suivi adaptes a votre cible. Vous relisez et ajustez.
+- **Planification** — chaque matin, chaque soir, ou manuel uniquement.
+
+Exemple concret de ce que ca donne :
+
+> **Mon activite :** "Je developpe un assistant IA pour les acheteurs en foire"
+>
+> **Ma cible :** "Responsables sourcing et chefs de produit dans le retail francais"
+>
+> **Claude propose :**
+> - acheteur sourcing foire
+> - category manager retail
+> - sourcing manager import
+> - responsable achats international
+>
+> **Note de connexion generee :**
+> "Bonjour {prenom}, je developpe un outil IA pour les acheteurs en foire : photo d'un stand, fiche fournisseur auto. Curieux d'avoir votre avis !"
+
+Vous validez. Config sauvegardee. C'est pret.
+
+### 2. Prospection quotidienne (automatique)
+
+Lancez `/claudin` — ou laissez le scheduler le faire pour vous.
+
+**Recherche** — Claudin ouvre LinkedIn dans Chrome, lance vos recherches, et scanne les resultats. Il lit chaque profil : poste, entreprise, localisation. Il ignore les profils non pertinents (recruteurs, commerciaux, RH) et ajoute les bons profils au tracker.
+
+**Connexion** — Pour chaque prospect trouve, Claudin clique sur "Se connecter" et ajoute votre note personnalisee. Delais aleatoires entre chaque action (15-30 secondes) pour mimer un comportement humain. Max 15 par session, 100 par semaine — les limites LinkedIn sont respectees.
+
+**Message** — Claudin verifie votre page de connexions. Quand quelqu'un accepte votre invitation, il envoie automatiquement votre message de suivi. Tout est trace dans un fichier local.
+
+### 3. Suivi
+
+Lancez `/claudin-dashboard` pour voir ou vous en etes :
 
 ```
-git clone https://github.com/bacleclement/claudin.git
-cd claudin
+Pipeline :
+  15 trouves -> 13 invites -> 2 connectes -> 2 messages envoyes
+
+Par campagne :
+  "Retail sourcing"  — 15 invites | 2 connectes | 2 messages
+
+Top entreprises :
+  Castorama (5) | Leroy Merlin (1) | Blancheporte (1)
 ```
 
-Ouvrez le dossier dans l'app Claude Code, puis lancez :
-
-```
-/claudin-setup
-```
-
-L'assistant de configuration vous pose 7 questions :
-
-**Etape 0** — Langue : francais ou anglais ? Tout l'assistant s'adapte.
-
-**Etape 1** — Plan LinkedIn : gratuit ou Premium ? Cela change la strategie de connexion (gratuit = nombre limite de notes personnalisees).
-
-**Etape 2** — "Decris ton activite en une phrase."
-> J'ai tape : "Je developpe un assistant IA pour les acheteurs en foire — photo d'un stand, fiche fournisseur structuree automatiquement."
-
-**Etape 3** — "Qui veux-tu atteindre ?"
-> "Les responsables sourcing, acheteurs et chefs de produit dans le retail francais"
-
-**Etape 4** — Claude propose des mots-cles de recherche LinkedIn :
-- [x] "acheteur sourcing foire"
-- [x] "category manager retail"
-- [x] "sourcing manager import Lille"
-- [x] "responsable achats international"
-- [ ] "procurement manager France"
-
-Vous cochez ceux qui vous semblent pertinents.
-
-**Etape 5** — Claude redige vos messages. Vous relisez et modifiez :
-
-> Note de connexion : "Bonjour {prenom}, je developpe un outil IA pour les acheteurs en foire : photo d'un stand -> fiche fournisseur auto. Curieux d'avoir votre avis !"
-
-> Message de suivi : "Merci pour la connexion ! Je developpe un assistant IA pour les acheteurs en foire — photo d'un stand -> fiche fournisseur structuree. Seriez-vous dispo pour un echange de 15 min ?"
-
-**Etape 6** — Planification : chaque matin a 9h ? Chaque soir ? Manuel uniquement ?
-
-C'est fait. Config sauvegardee. Vous etes pret.
+Rapports quotidiens generes en JSON et Markdown. Tout reste sur votre machine.
 
 ---
 
-## Premier lancement : regardez-le travailler
+## Ce qu'il vous faut
 
-```
-/claudin
-```
+Trois choses :
 
-### Etape 1 — Recherche
+1. **L'app Claude Code** — desktop ou web sur [claude.ai/code](https://claude.ai/code). Attention : pas le terminal CLI, l'app.
+2. **L'extension Claude in Chrome** — disponible sur le Chrome Web Store. C'est elle qui permet a Claude de controler votre navigateur.
+3. **Un compte LinkedIn** — gratuit ou Premium. Claudin s'adapte a votre plan.
 
-Claudin ouvre LinkedIn dans votre navigateur Chrome, lance vos recherches et scanne les resultats :
-
-![Resultats de recherche LinkedIn](images/search-results.jpg)
-
-Il lit chaque profil : poste, entreprise, localisation. Ignore les profils non pertinents (recruteurs, commerciaux). Ajoute les acheteurs pertinents au tracker.
-
-### Etape 2 — Connexion
-
-Pour chaque nouveau profil trouve, Claudin clique sur "Se connecter" et ajoute votre note personnalisee :
-
-[SCREENSHOT: Claude Code envoyant une demande de connexion]
-
-Il respecte les limites LinkedIn : max 15 par session, max 100 par semaine. Delais aleatoires entre chaque action (15-30 secondes) pour eviter la detection.
-
-### Etape 3 — Verification des acceptations et messages
-
-Claudin navigue vers votre page de connexions, verifie les nouvelles acceptations :
-
-![Connexions recentes montrant les acceptations](images/connections-accepted.jpg)
-
-Quand quelqu'un a accepte, il clique sur "Message" et envoie votre suivi :
-
-![Message de suivi envoye a Pierre Foulon](images/message-sent.jpg)
-
-Tout est automatique. Tout est suivi.
-
----
-
-## Resultats : Jour 1
-
-Apres un apres-midi :
-
-```
-Claudin — 2026-04-06
-
-Profils trouves : 15
-Invitations : 15 (15/100 cette semaine)
-Acceptations : 2
-Messages : 2
-Pipeline : 0 trouves -> 13 invites -> 0 connectes -> 2 messages envoyes
-```
-
-Deux acheteurs Castorama ont accepte et recu mon message de suivi en quelques heures. L'un est Directeur. Cout : 0 euro. Ce que Waalaxy facture 99 euros/mois.
-
----
-
-## Claudin vs Waalaxy
-
-| Fonctionnalite | Waalaxy | Claudin |
-|---|---|---|
-| Prix | 39-139 euros/mois | **Gratuit** |
-| Open source | Non | **Oui** |
-| Vos donnees | Leurs serveurs | **Votre machine** |
-| Demandes de connexion | Oui | Oui |
-| Notes personnalisees | Oui | Oui + **redigees par IA** |
-| Messages auto | Oui | Oui |
-| Multi-campagnes | Oui | Oui |
-| Sequences | Oui | Non (v1) |
-| Fonctionne sans PC | Oui (cloud) | Non (Chrome necessaire) |
-| Redaction IA des messages | Non | **Oui** |
-
-Le seul avantage de Waalaxy : l'execution cloud. Votre PC n'a pas besoin d'etre allume. Pour tout le reste, Claudin fait aussi bien ou mieux — et c'est gratuit.
-
----
-
-## Comment ca marche techniquement
-
-Claudin est compose de trois skills Claude Code (des fichiers markdown qui guident Claude) :
-
-- `/claudin-setup` — assistant de configuration interactif
-- `/claudin` — le pipeline de prospection
-- `/claudin-dashboard` — stats et suivi
-
-Il utilise l'extension **Claude in Chrome** pour controler votre navigateur — cliquer sur les boutons, taper les messages, lire les profils. La meme chose que vous feriez manuellement, automatisee.
-
-Tous les contacts sont suivis dans un fichier local `tracker.json`. Rapports quotidiens en JSON et Markdown. Tout reste sur votre machine.
-
----
-
-## Pour demarrer
+Ensuite :
 
 ```
 git clone https://github.com/bacleclement/claudin.git
 ```
 
-Ouvrez dans l'app Claude Code. Lancez `/claudin-setup`. Commencez a prospecter.
-
-GitHub : [github.com/bacleclement/claudin](https://github.com/bacleclement/claudin)
-
-Mettez une etoile si ca vous a economise 99 euros/mois.
+Ouvrez le dossier dans Claude Code. Lancez `/claudin-setup`. 5 minutes de configuration. C'est tout.
 
 ---
 
-*Cree par [Clement Bacle](https://linkedin.com/in/clementbacle) — je developpe aussi [Gotchi](https://github.com/bacleclement/gotchi), un assistant IA pour les acheteurs en foire.*
+## Les limites (soyons honnetes)
+
+**Claudin a besoin de votre PC allume avec Chrome ouvert.** Waalaxy tourne dans le cloud — votre PC peut etre eteint. C'est le seul vrai avantage de Waalaxy.
+
+**Pas de sequences multi-messages (pour l'instant).** Claudin fait : connexion, puis un message quand la personne accepte. Pas de "relance J+3, relance J+7". C'est prevu pour la v2, mais honnetement 80% des reponses arrivent au premier message.
+
+**Risque LinkedIn.** Toute automation LinkedIn comporte un risque. Claudin minimise ce risque : delais humains, respect des quotas, arret automatique en cas d'alerte. Mais le risque zero n'existe pas.
+
+---
+
+## Pourquoi j'ai cree ca
+
+Je construis Gotchi, un assistant IA pour les acheteurs en foire. J'avais besoin de contacter des acheteurs pour tester mon produit. J'ai regarde Waalaxy — 99 euros/mois pour envoyer des demandes de connexion et des messages. J'ai regarde mon terminal avec Claude Code deja ouvert. Le choix etait evident.
+
+Un apres-midi plus tard, Claudin existait. Deux acheteurs m'ont repondu le jour meme.
+
+Si ca peut servir a d'autres, c'est open-source.
+
+---
+
+**GitHub :** [github.com/bacleclement/claudin](https://github.com/bacleclement/claudin)
+
+Mettez une etoile si ca vous evite un abonnement a 99 euros/mois.
+
+*Clement Bacle — [LinkedIn](https://linkedin.com/in/clementbacle)*
