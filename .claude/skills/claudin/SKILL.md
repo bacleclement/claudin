@@ -47,11 +47,16 @@ Each contact in tracker.json:
   "language": "fr",
   "degree": "2e",
   "campaign": "campaign-name",
-  "status": "found|invited|connected|messaged",
+  "status": "found|invited|connected|messaged|replied|declined",
   "invitedAt": null,
   "connectedAt": null,
   "messagedAt": null,
-  "notes": ""
+  "repliedAt": null,
+  "response": "",
+  "notes": "",
+  "recentActivity": "",
+  "messageContext": "",
+  "ghDiscussionUrl": null
 }
 ```
 
@@ -144,20 +149,98 @@ Guard: Stop if remaining_messages <= 5
 5. Scroll down once and check again
 6. Save tracker
 
-#### 3b. Send follow-up messages
+#### 3b. Analyze recent activity and send personalized messages
 
 For each contact in tracker where status = "connected" (not yet messaged):
 
-1. Click "Message" button next to their name on the connections page
-   - Or navigate to their profile and click Message there
-2. Get the follow-up message from their campaign config
-3. Pick followup_message_fr or followup_message_en based on contact.language
-4. Replace {prenom}/{firstName} with contact.firstName
-5. Type the message and click "Envoyer" / "Send"
-6. Update tracker: status = "messaged", messagedAt = today
-7. Wait 15-30 seconds between messages
+**Analyze their profile activity:**
+
+1. Navigate to their profileUrl
+2. Scroll to "Activité" / "Activity" section
+3. Scan their last 3-5 posts, reposts, or comments (if any)
+4. Extract context: topics they care about, events attended, opinions shared, companies mentioned
+5. Judge relevance: does any post relate to the business context in config.business.description? (trade shows, sourcing, suppliers, purchasing, fairs, product discovery, etc.)
+6. Save a brief summary in contact.recentActivity (1-2 sentences max), or empty if nothing relevant
+
+**Compose and send personalized message:**
+
+7. Start from the campaign's followup_template_fr or followup_template_en based on contact.language
+8. Replace {prenom}/{firstName} with contact.firstName
+9. Only personalize if a post is RELEVANT to the product/business context. A post about a trade show, sourcing trip, supplier management, or industry fair = relevant. A post about leadership quotes, team celebrations, or unrelated topics = NOT relevant — do not reference it.
+10. If relevant activity found: open with a natural reference — e.g. "J'ai vu votre post sur le salon X — ". This goes BEFORE the template text.
+11. If no activity or no relevant activity: use the template as-is, do not force a reference
+10. Keep total message under 500 characters, conversational, no sales pitch
+11. Click "Message" on their profile page
+12. Type the personalized message and click "Envoyer" / "Send"
+13. Update tracker: status = "messaged", messagedAt = today, messageContext = what was referenced from their posts
+14. Wait 15-30 seconds between messages
 
 Save tracker.
+
+---
+
+#### 3c. Collect responses and post to GitHub Discussions
+
+**Trigger:** Run this step on every pipeline execution. Check LinkedIn messaging for replies from contacts with status = "messaged".
+
+1. Navigate to https://www.linkedin.com/messaging/
+2. For each contact in tracker where status = "messaged":
+   - Search for their name in the messaging inbox
+   - If they replied: read the full conversation thread
+   - Extract their response text
+   - Update tracker: status = "replied", repliedAt = today, response = summary of their reply
+
+3. If config.feedback is set and the reply contains useful signal (pain points, workflow details, tool usage, feature ideas, opinions on the problem space):
+
+   **Post to GitHub Discussion using `gh api graphql`:**
+
+   ```
+   gh api graphql -f query='mutation { createDiscussion(input: {
+     repositoryId: "{config.feedback.gh_repo_id}",
+     categoryId: "{config.feedback.gh_discussion_category_id}",
+     title: "[Interview] {contact.name} — {contact.role} ({contact.company})",
+     body: "..."
+   }) { discussion { number url } } }'
+   ```
+
+   **Discussion body format:**
+
+   ```markdown
+   ## Contact
+   - **Name:** {contact.name}
+   - **LinkedIn:** {contact.profileUrl}
+   - **Role:** {contact.role}
+   - **Company:** {contact.company}
+   - **Location:** {contact.location}
+   - **Campaign:** {contact.campaign}
+
+   ## Career Path
+   Scrape experience section from their LinkedIn profile. Include role, company, dates.
+
+   ## Conversation — {date}
+
+   ### Our message
+   > {the message we sent}
+
+   ### Their response
+   > {their full reply}
+
+   ## Key Insights
+   - Bullet points summarizing actionable takeaways
+   - Pain points, workflow details, tools used, feature requests
+   - How this relates to the product
+
+   ## Next Step
+   - Recommend action: propose call, send demo, follow up with question, etc.
+
+   ## Source
+   Captured by Claudin outreach pipeline — campaign: {contact.campaign}
+   ```
+
+4. Update tracker: ghDiscussionUrl = the discussion URL returned by the API
+5. Save tracker
+
+**Note:** Only post discussions for replies with actual signal. Polite declines ("merci mais pas intéressé") should NOT be posted — just update tracker status to "declined".
 
 ---
 
